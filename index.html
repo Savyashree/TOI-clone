@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>India Map</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+    <style>
+        /* Define the style for the districts */
+        .district {
+            fill: #185aff52;
+            stroke: #333;
+            stroke-width: 0.5px;
+        }
+
+        /* Define the style for the highlighted district */
+        .highlighted {
+            fill: orange;
+            stroke: #333;
+            stroke-width: 2px;
+        }
+
+        .state {
+            fill: #b11818;
+            stroke: #333;
+            stroke-width: 1px;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="./index.js"></script>
+    <div id="alliance_container"></div>
+    <!-- Create a container for the map -->
+    <svg id="map" width="1000" height="1000"></svg>
+
+    <script>
+        function createMap() {
+            // Load the India map data using TopoJSON
+            d3.json(
+                'https://raw.githubusercontent.com/deldersveld/topojson/master/countries/india/india-districts.json'
+            ).then(function (data) {
+                // Extract the districts data from the TopoJSON data
+                var districts = topojson.feature(data, data.objects.IND_adm2);
+
+                // Define the projection for the India map
+                var projection = d3
+                    .geoMercator()
+                    .center([82.0, 23.0])
+                    .scale(1000)
+                    .translate([400, 300]);
+
+                // Define the path generator for the India map
+                var path = d3.geoPath().projection(projection);
+
+                // Create the India map using the geojson data
+                var map = d3
+                    .select('#map')
+                    .selectAll('path')
+                    .data(districts.features)
+                    .enter()
+                    .append('path')
+                    .attr('d', path)
+                    .attr("fill", "lightblue")
+                    .attr("stroke", "black")
+                    .attr("stroke-width", 0.5)
+                    .attr('id', function (d, i) {
+                        return 'district' + i;
+                    })
+                    // .on('mouseover', function (d, i) {
+                    //     d3.selectAll('.highlighted').classed('highlighted', false);
+                    //     d3.select(this).classed('highlighted', (d, i) => {
+
+                    //         console.log(d.properties.NAME_1, d.properties.NAME_2);
+                    //         return true;
+                    //     });
+                    // });
+                    .on('mouseover', function (d, i) {
+                        updateHigh(d, i, this)
+
+                    });
+            });
+        }
+        createMap();
+        updateHighlightThroughout();
+        updateMainScreenData();
+    </script>
+
+
+</body>
+
+</html>

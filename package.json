@@ -1,0 +1,25 @@
+{
+  "dependencies": {
+    "express": "^4.18.2",
+    "fs": "^0.0.1-security",
+    "require": "^2.4.20",
+    "xlsx": "^0.18.5"
+  },
+  "name": "toi-clone",
+  "version": "1.0.0",
+  "main": "readFile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Savyashree/TOI-clone.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Savyashree/TOI-clone/issues"
+  },
+  "homepage": "https://github.com/Savyashree/TOI-clone#readme",
+  "description": ""
+}
